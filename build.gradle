@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+group 'com.blackcandletech'
+version '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('biz.paluch.redis:lettuce:4.5.0.Final')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+}
+
+compileJava {
+    sourceCompatibility("17")
+    targetCompatibility("17")
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.black-candle-technologies'
+            artifactId = 'redis'
+            version = this.version
+            from components.java
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+
+    maxHeapSize = '1G'
+
+    testLogging {
+        events "passed"
+    }
+}
